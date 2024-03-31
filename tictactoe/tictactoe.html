@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe Game</title>
+    <link rel="stylesheet" href="../tictactoe/tictactoe.css">
+    <script src="../tictactoe/tictactoe.js"></script>
+    <script src="https://kit.fontawesome.com/6c9ee3040f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <button class="go-back"><i class="fa-solid fa-circle-chevron-left"></i></button>
+  
+    <style>
+        .go-back {
+            background-color: transparent;
+            border: none;
+            outline: none;
+            font-size: 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .go-back i {
+            color: #6A6BA4;
+        }
+
+        .go-back i:hover {
+            cursor: pointer;
+            color: #2A2B4A;
+        }
+    </style>
+
+    <script>
+        document.querySelector(".go-back").addEventListener("click", () => {
+            location.href = "../freeCodeCamp.php";
+        });
+    </script>
+
+    <div id="game-container">
+        <div id="inner-div">
+            <div id="display">
+                
+            </div>
+            
+            <div id='end-screen'>
+                
+            </div>
+            
+            <div id="turn-1">
+                
+            </div>
+            
+            <div id="turn-2">
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
