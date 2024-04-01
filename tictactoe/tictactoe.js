@@ -30,17 +30,24 @@ document.addEventListener("DOMContentLoaded", () => {
 			<h2 id='multi-player'>Two Player</h2>
 		`;
 		
-		document.querySelector("#single-player").addEventListener("click", () => {
+		document.querySelector("#single-player").removeEventListener("click", singlePlayerEventListener);
+		function singlePlayerEventListener() {
 			mode = "single";
 			display.style.opacity = "0";
+			playerNames = ["me", "computer"];
 			setTimeout(stage2, 400);
-		});
-	
-		document.querySelector("#multi-player").addEventListener("click", () => {
+		}
+		document.querySelector("#multi-player").removeEventListener("click", multiPlayerEventListener);
+		function multiPlayerEventListener() {
 			mode = "multi";
 			display.style.opacity = "0";
+			playerNames = ["player 1", "player 2"];
 			setTimeout(stage2, 400);
-		});
+		}
+		
+		document.querySelector("#single-player").addEventListener("click", singlePlayerEventListener);
+	
+		document.querySelector("#multi-player").addEventListener("click", multiPlayerEventListener);
 	}
 	
 	
@@ -49,19 +56,30 @@ document.addEventListener("DOMContentLoaded", () => {
 	
 	function stage2() {
 		display.style.opacity = "100%";
-		display.innerHTML = `
-			<h1>Player 1: Would you like X or O?</h1>
-			<h2 id='x'>X</h2>
-			<h2 id='o'>O</h2>
-			<button class='go-back-btn'><i class="fa-solid fa-arrow-left"></i> Back</button>
-		`;
 		
-		document.querySelector(".go-back-btn").addEventListener("click", () => {
+		if(start === 0) {
+			display.innerHTML = `
+				<h1>${playerNames[0]}: would you like X or O?</h1>
+				<h2 id='x'>X</h2>
+				<h2 id='o'>O</h2>
+				<button class='go-back-btn'><i class="fa-solid fa-arrow-left"></i> Back</button>
+			`;
+		} else {
+			display.innerHTML = `
+				<h1>${playerNames[1]}: would you like X or O?</h1>
+				<h2 id='x'>X</h2>
+				<h2 id='o'>O</h2>
+				<button class='go-back-btn'><i class="fa-solid fa-arrow-left"></i> Back</button>
+			`;
+		}
+		
+		document.querySelector(".go-back-btn").removeEventListener("click", goBackBtnEventListener);
+		function goBackBtnEventListener() {
 			display.style.opacity = "0";
 			setTimeout(stage1, 400);
-		});
-		
-		document.querySelector("#x").addEventListener("click", () => {
+		}
+		document.querySelector("#x").removeEventListener("click", xEventListener);
+		function xEventListener() {
 			character = 'x';
 			
 			if(start === 0) {
@@ -70,19 +88,11 @@ document.addEventListener("DOMContentLoaded", () => {
 				turn = "second";
 			}
 			
-			if(mode === "multi") {
-				playerNames[0] = "player 1";
-				playerNames[1] = "player 2";
-			} else {
-				playerNames[0] = "me";
-				playerNames[1] = "computer";
-			}
-			
 			display.style.opacity = "0";
 			setTimeout(stage3, 400);
-		});
-		
-		document.querySelector("#o").addEventListener("click", () => {
+		}
+		document.querySelector("#o").removeEventListener("click", oEventListener);
+		function oEventListener() {
 			character = 'o';
 			
 			if(start === 0) {
@@ -91,17 +101,15 @@ document.addEventListener("DOMContentLoaded", () => {
 				turn = "second";
 			}
 			
-			if(mode === "multi") {
-				playerNames[0] = "player1";
-				playerNames[1] = "player2";
-			} else {
-				playerNames[0] = "me";
-				playerNames[1] = "computer";
-			}
-			
 			display.style.opacity = "0";
 			setTimeout(stage3, 400);
-		});
+		}
+		
+		document.querySelector(".go-back-btn").addEventListener("click", goBackBtnEventListener);
+		
+		document.querySelector("#x").addEventListener("click", xEventListener);
+		
+		document.querySelector("#o").addEventListener("click", oEventListener);
 	}
 	
 	
@@ -132,11 +140,14 @@ document.addEventListener("DOMContentLoaded", () => {
 			</div>
 		`;
 		
-		document.querySelector(".reset-all-btn").addEventListener("click", () => {
+		document.querySelector(".reset-all-btn").removeEventListener("click", resetAllBtnEventListener);
+		function resetAllBtnEventListener() {
 			display.style.opacity = "0";
 			points = [0, 0];
 			setTimeout(stage1, 400);
-		});
+		}
+		
+		document.querySelector(".reset-all-btn").addEventListener("click", resetAllBtnEventListener);
 		
 		gridCells = Array.from(document.querySelectorAll(".grid-cell"));
 		
@@ -435,7 +446,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 		
 		Array.from(document.querySelectorAll(".grid-cell")).forEach((item, index) => {
-			item.addEventListener("click", () => {
+			item.removeEventListener("click", gridCellEventListener);
+			function gridCellEventListener() {
 				if(mode === "multi" && !item.innerHTML) {
 					item.innerHTML = character;
 
@@ -474,7 +486,9 @@ document.addEventListener("DOMContentLoaded", () => {
 						checkForEnd();
 					}, 400);
 				}
-			});
+			}
+			
+			item.addEventListener("click", gridCellEventListener);
 		});
 	}
 	
@@ -543,3 +557,4 @@ document.addEventListener("DOMContentLoaded", () => {
 		document.querySelector("#turn-2").style.marginTop = "-25rem";
 	}
 });
+
